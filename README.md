@@ -24,7 +24,6 @@ A JSON object describing the allowed values of a named field.
 
 * name - of type String, the name of the field 
 * required - of type Boolean, indicates this field is required
-* nullable: of type Boolean, indicates this field can be of null value
 * values: of type Array, A set of Type Descriptors which define the allow values of this field.
 
 ####Example
@@ -42,11 +41,12 @@ A JSON object describing the allowed values of a named field.
 Describes a interval of allowed values. A polymorphic object, the interval definition specifc to data type being described.
 
 ####types
-* "array"
-* "boolean"
-* "number"
-* "object"
-* "string"
+* array
+* boolean
+* null
+* number
+* object
+* string
 
 #####Array Descriptor
 ```
@@ -60,11 +60,12 @@ Describes a interval of allowed values. A polymorphic object, the interval defin
 ```
 #####Boolean Descriptor
 ```
-{
-	type: "boolean"
-}
+{ type: "boolean" }
 ```
-
+#####Null Descriptor
+```
+{ type: "null" }
+```
 #####Number Descriptor
 ```
 {
