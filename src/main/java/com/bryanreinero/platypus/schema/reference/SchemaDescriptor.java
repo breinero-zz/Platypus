@@ -1,4 +1,4 @@
-package com.bryanreinero.firehose.schema.reference;
+package com.bryanreinero.platypus.schema.reference;
 
 public class SchemaDescriptor {
 	

@@ -1,4 +1,4 @@
-package com.bryanreinero.firehose.schema;
+package com.bryanreinero.platypus.parser;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -6,6 +6,12 @@ import java.util.Map;
 import org.bson.types.BasicBSONList;
 
 import com.bryanreinero.firehose.Transformer;
+import com.bryanreinero.platypus.schema.ArrayInterval;
+import com.bryanreinero.platypus.schema.DoubleInterval;
+import com.bryanreinero.platypus.schema.FieldDescriptor;
+import com.bryanreinero.platypus.schema.Interval;
+import com.bryanreinero.platypus.schema.SchemaDescriptor;
+import com.bryanreinero.platypus.schema.StringInterval;
 import com.mongodb.util.*;
 
 public class Parser {
@@ -54,25 +60,30 @@ public class Parser {
 			i = new StringInterval( (String)map.get("regex") );
 			break;
 		case DoubleType:
-			i = new DoubleInterval( (Double)map.get("min"),  (Double)map.get("max") );
-			break;
-		case Object_Id:
-			i = new DoubleInterval( (Double)map.get("min"),  (Double)map.get("max") );
+			// the minDesc (minimum description) and maxDesc (maximum description)
+			// are substructures containing the min /max values and inclusive flags
+			Map<String, Object>minDesc = (Map<String, Object>)map.get("min");
+			Map<String, Object>maxDesc = (Map<String, Object>)map.get("max");
+			
+			i = new DoubleInterval( (Double)minDesc.get("value"), 
+					(Boolean)minDesc.get("inclusive"),
+					(Double)map.get("max"),
+					(Boolean)minDesc.get("inclusive")
+					);
 			break;
 		case ObjectType:
 			i = new SchemaDescriptor( map );
 			break;
-			
+		case ArrayType:
+			i = new ArrayInterval();
+			break;
 		}
+		
 		return i;
 	}
-	
-	
 	
 	public static void main( String[] args ) {
 		String json = "{ fields: [ {a: 1}, { b:2}  ] }";
 		//Map<String, Object> map = Parser.toMap(json);
 	}
-	
-	
 }

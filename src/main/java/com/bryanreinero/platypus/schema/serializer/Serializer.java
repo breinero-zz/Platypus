@@ -1,19 +1,18 @@
-package com.bryanreinero.firehose.schema.serializer;
+package com.bryanreinero.platypus.schema.serializer;
 
 import java.util.Map;
 import java.util.Set;
 
-import com.bryanreinero.firehose.schema.DoubleInterval;
-import com.bryanreinero.firehose.schema.Interval;
-import com.bryanreinero.firehose.schema.SchemaDescriptor;
-import com.bryanreinero.firehose.schema.FieldDescriptor;
-import com.bryanreinero.firehose.schema.StringInterval;
-import com.bryanreinero.firehose.schema.SchemaDescriptor.Validation;
-import com.bryanreinero.firehose.schema.Visitor;
+import com.bryanreinero.platypus.schema.DoubleInterval;
+import com.bryanreinero.platypus.schema.Interval;
+import com.bryanreinero.platypus.schema.ObjectInterval;
+import com.bryanreinero.platypus.schema.SchemaDescriptor;
+import com.bryanreinero.platypus.schema.FieldDescriptor;
+import com.bryanreinero.platypus.schema.StringInterval;
+import com.bryanreinero.platypus.schema.SchemaDescriptor.Validation;
+import com.bryanreinero.platypus.schema.Visitor;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
-
 
 public class Serializer implements Visitor {
 
@@ -95,5 +94,11 @@ public class Serializer implements Visitor {
 	@Override
 	public void visit(DoubleInterval v) {
 		buf.append("{ 'min': "+v.getMin()+", max: "+v.getMax()+" }");
+	}
+
+	@Override
+	public void visit(ObjectInterval v) {
+		// TODO Auto-generated method stub
+		
 	}
 }	

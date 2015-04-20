@@ -1,4 +1,4 @@
-package com.bryanreinero.firehose.schema;
+package com.bryanreinero.platypus.schema;
 
 /**
  * Describes a range of acceptable values for a given data type

@@ -1,4 +1,4 @@
-package com.bryanreinero.firehose.schema.type;
+package com.bryanreinero.platypus.schema.type;
 
 public class Odd implements Number {
 	

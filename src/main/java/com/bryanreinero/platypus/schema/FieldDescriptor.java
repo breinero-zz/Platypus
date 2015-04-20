@@ -1,4 +1,4 @@
-package com.bryanreinero.firehose.schema;
+package com.bryanreinero.platypus.schema;
 
 import java.util.HashSet;
 import java.util.Set;

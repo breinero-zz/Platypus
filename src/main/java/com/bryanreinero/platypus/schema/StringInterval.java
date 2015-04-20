@@ -1,8 +1,8 @@
-package com.bryanreinero.firehose.schema;
+package com.bryanreinero.platypus.schema;
 
 import java.util.regex.Pattern;
 
-import com.bryanreinero.firehose.schema.type.StringType;
+import com.bryanreinero.platypus.schema.type.StringType;
 
 public class StringInterval implements Interval<String> {
 

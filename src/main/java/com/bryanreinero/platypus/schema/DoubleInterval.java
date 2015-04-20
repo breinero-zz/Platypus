@@ -1,13 +1,15 @@
-package com.bryanreinero.firehose.schema;
+package com.bryanreinero.platypus.schema;
 
 public class DoubleInterval implements Interval<Double> {
+
+	private final Double min, max;
+	private final Boolean inclusiveMin, inclusiveMax;
 	
-	private final Double min;
-	private final Double max;
-	
-	public DoubleInterval ( Double min, Double max ) {
+	public DoubleInterval ( Double min, Boolean inclusiveMin, Double max, Boolean inclusiveMax ) {
 		this.min = min;
 		this.max = max;
+		this.inclusiveMin = inclusiveMin;
+		this.inclusiveMax = inclusiveMax;
 	}
 
 	@Override
