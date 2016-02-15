@@ -1,7 +1,7 @@
 package com.bryanreinero.platypus.generator;
 
-import com.bryanreinero.firehose.util.markov.Chain;
-import com.bryanreinero.firehose.util.markov.Event;
+import com.bryanreinero.markov.Chain;
+import com.bryanreinero.markov.Event;
 
 import com.bryanreinero.platypus.schema.FieldDescriptor;
 import com.bryanreinero.platypus.schema.ValueDescriptor;
@@ -15,24 +15,29 @@ import java.util.Set;
  */
 public class FieldGenerator {
 
-    private final Chain<ValueGenerator> values = new Chain<ValueGenerator>();
+    private final Chain<RandomInterval> values = new Chain<RandomInterval>();
     private final String key;
 
     public FieldGenerator(FieldDescriptor descriptor ) {
 
         key = descriptor.getName();
 
-        Set<Event<ValueGenerator>> events = new HashSet<Event<ValueGenerator>>();
+        Set<Event<RandomInterval>> events = new HashSet<Event<RandomInterval>>();
         for( ValueDescriptor d : descriptor.getValues() )
-            events.add( new Event<ValueGenerator>( d.getProbability(), new ValueGenerator( d, this ) ) );
+            events.add(
+                    new Event<RandomInterval>(
+                            d.getProbability(),
+                            RandIntervalGenerators.getRandomIntervalGenerator( d )
+                    )
+            );
 
         values.setProbabilities( events );
     }
 
     public void setField( Document doc ) {
-        ValueGenerator generator = values.run();
+        RandomInterval generator = values.run();
 
         if( generator != null )
-            doc.put(  key, generator.getValue() );
+            doc.put(  key, generator.getNext() );
     }
 }
