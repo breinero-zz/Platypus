@@ -2,8 +2,6 @@ package com.bryanreinero.platypus.schema;
 
 import java.util.regex.Pattern;
 
-import com.bryanreinero.platypus.schema.type.StringType;
-
 public class StringInterval implements Interval<String> {
 
 	private final Pattern pattern ;

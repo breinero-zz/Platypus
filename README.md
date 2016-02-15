@@ -23,22 +23,21 @@ JSON schema description composed of two sub-descriptors: field descriptors and t
 A JSON object describing the allowed values of a named field.
 
 * name - of type String, the name of the field 
-* required - of type Boolean, indicates this field is required
 * values: of type Array, A set of Type Descriptors which define the allow values of this field.
+
 
 ####Example
 ```
 { 
 	name: "user",
-    required: true,
     values: [
-    	{ type: "int", min: "$minInteger", max: "$maxValue" }
+    	{ type: "int", min: "$minInteger", max: "$maxValue", probability; 1.0 }
     ]   
 }
 ```
 
 ###Type Descriptor
-Describes a interval of allowed values. A polymorphic object, the interval definition specifc to data type being described.
+Describes a interval of allowed values. A polymorphic object, the interval definition specific to data type being described.
 
 ####types
 * array
@@ -124,41 +123,35 @@ Using dot notation is particularly helpful in keeping the descriptors document s
 {
     fields: [
         { name: "user",
-          required: true,
           values: [
           	{ type: "int", min: "$minInteger", max: "$maxValue" }
           ]   
         },
         {	name: "userId",
-            required: true,
             values: [
             	{ type: "int", min: "$minInteger", max: "$maxValue" }
             ]
         },
         {
             name: "clues",
-            required: false,
             values: [
             	{ type: "array", min: 0, max: 3 }
             ]
         },
         {
             name: "clues.$",
-            required: false,
             values: [
             	{ type: "string", regex: "\.144" }
             ]
         },
         {
         	name: "geometry",
-        	required: true,
         	values: [
         		{ type: "object", uri: "bryanreinero.com/schema/poi.json" }
         	]
         },
         {
          	name: "description",
-         	required: true,
          	values: [
          		{ type: "string", regex: "\.144" }
          	]

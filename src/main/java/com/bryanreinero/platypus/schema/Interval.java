@@ -7,5 +7,5 @@ package com.bryanreinero.platypus.schema;
  * @param <T>
  */
 public interface Interval <T> extends Visitable {
-	public boolean inRange( T t);
+	boolean inRange( T t);
 }

@@ -3,87 +3,49 @@ package com.bryanreinero.platypus.parser;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.bson.types.BasicBSONList;
+import com.bryanreinero.platypus.schema.*;
+import com.bryanreinero.platypus.generator.RandIntervalGenerators.Type;
 
-import com.bryanreinero.firehose.Transformer;
-import com.bryanreinero.platypus.schema.ArrayInterval;
-import com.bryanreinero.platypus.schema.DoubleInterval;
-import com.bryanreinero.platypus.schema.FieldDescriptor;
-import com.bryanreinero.platypus.schema.Interval;
-import com.bryanreinero.platypus.schema.SchemaDescriptor;
-import com.bryanreinero.platypus.schema.StringInterval;
 import com.mongodb.util.*;
 
 public class Parser {
 	
-	public static SchemaDescriptor parse( String json ) {
+	public static DocumentDescriptor parse( String json ) {
 		
 		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (Map<String, Object>)JSON.parse(json);
 		return buildDescriptor( map );
 	}
-	
-	public static SchemaDescriptor buildDescriptor( Map<String, Object> map ) {
-		
-		SchemaDescriptor sd = new SchemaDescriptor( "bing", "blah" );
-		
-		ArrayList<Object> fields = (BasicBSONList)map.get( "fields" );
-		FieldDescriptor fd;
-		for ( Object o : fields )
-			sd.SetDescriptor( parseField( (Map<String, Object>)o ) );
-		
-		return sd;
-	}
+
+
+    public static DocumentDescriptor buildDescriptor( Map<String, Object> map  ) {
+        DocumentDescriptor d = new DocumentDescriptor( (String)map.get( "name" ) );
+
+        ArrayList<Object> fields = (ArrayList<Object>)map.get( "fields" );
+        for( Object field : fields )
+            d.setField( parseField( (Map<String, Object>)field ) );
+        return d;
+    }
 	
 	public static FieldDescriptor parseField( Map<String, Object> o ) {
 		
 		FieldDescriptor fd = null;
 		String name = (String)o.get("name");
-		Boolean required = (Boolean)o.get("Required");
 		
-		fd = new FieldDescriptor( name, required );
+		fd = new FieldDescriptor( name );
 		
-		ArrayList<Object> ranges = (ArrayList<Object>)o.get( "intervals" );
-		for( Object range : ranges )
-			fd.setInterval( buildInterval( (Map<String, Object>)range ) );
+		ArrayList<Object> values = (ArrayList<Object>)o.get( "values" );
+		for( Object value : values )
+			fd.setValue( buildValue( (Map<String, Object>)value ) );
 		
 		return fd;
 	}
 	
-	public static Interval buildInterval( Map<String, Object> map ) {
-		Interval i = null;
-		
-		Transformer.Type type = Transformer.Type.getType((String)map.get("type"));
-        
-		switch( type ) {
-		case StringType:
-			i = new StringInterval( (String)map.get("regex") );
-			break;
-		case DoubleType:
-			// the minDesc (minimum description) and maxDesc (maximum description)
-			// are substructures containing the min /max values and inclusive flags
-			Map<String, Object>minDesc = (Map<String, Object>)map.get("min");
-			Map<String, Object>maxDesc = (Map<String, Object>)map.get("max");
-			
-			i = new DoubleInterval( (Double)minDesc.get("value"), 
-					(Boolean)minDesc.get("inclusive"),
-					(Double)map.get("max"),
-					(Boolean)minDesc.get("inclusive")
-					);
-			break;
-		case ObjectType:
-			i = new SchemaDescriptor( map );
-			break;
-		case ArrayType:
-			i = new ArrayInterval();
-			break;
-		}
-		
-		return i;
-	}
-	
-	public static void main( String[] args ) {
-		String json = "{ fields: [ {a: 1}, { b:2}  ] }";
-		//Map<String, Object> map = Parser.toMap(json);
+	public static ValueDescriptor buildValue(Map<String, Object> map ) {
+        ValueDescriptor descriptor = new ValueDescriptor( Type.getType( (String)map.get( "type" ) ) );
+        descriptor.setMax( (Integer) map.get("max") );
+        descriptor.setMin( (Integer)map.get("min") );
+        descriptor.setProbability( ((Double)map.get( "probability" )).floatValue()  );
+		return descriptor;
 	}
 }
