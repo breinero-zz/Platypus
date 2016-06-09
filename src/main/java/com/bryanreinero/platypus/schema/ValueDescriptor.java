@@ -7,11 +7,11 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * Created by brein on 2/14/2016.
  */
-public class ValueDescriptor <T> {
+public class ValueDescriptor {
 
     @JsonProperty
     private final Type type;
-    private T max, min;
+    private String max, min;
     private float probability = 0.0f;
 
     @JsonCreator
@@ -19,19 +19,19 @@ public class ValueDescriptor <T> {
         this.type = type;
     }
 
-    public T getMax() {
+    public String getMax() {
         return max;
     }
 
-    public void setMax( T max) {
+    public void setMax( String max) {
         this.max = max;
     }
 
-    public T getMin() {
+    public String getMin() {
         return min;
     }
 
-    public void setMin( T min) {
+    public void setMin( String min) {
         this.min = min;
     }
 

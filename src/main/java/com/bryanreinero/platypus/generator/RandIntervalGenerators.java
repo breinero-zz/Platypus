@@ -47,8 +47,8 @@ public class RandIntervalGenerators {
         switch (  spec.getType()  ) {
             case intType:
                 return new RandomInterval<Integer>() {
-                    private final int lowerBound = (Integer)spec.getMin();
-                    private final int upperBound = (Integer) spec.getMax();
+                    private final int lowerBound = Integer.parseInt( spec.getMin() );
+                    private final int upperBound = Integer.parseInt( spec.getMax() );
 
                     public Integer getNext(){
                         int i;
