@@ -1,32 +1,37 @@
 package com.bryanreinero.platypus.schema;
 
 import com.bryanreinero.platypus.generator.RandIntervalGenerators.Type;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by brein on 2/14/2016.
  */
-public class ValueDescriptor {
+public class ValueDescriptor <T> {
+
+    @JsonProperty
     private final Type type;
-    private Integer max, min;
+    private T max, min;
     private float probability = 0.0f;
 
+    @JsonCreator
     public ValueDescriptor( Type type ) {
         this.type = type;
     }
 
-    public Integer getMax() {
+    public T getMax() {
         return max;
     }
 
-    public void setMax( Integer max) {
+    public void setMax( T max) {
         this.max = max;
     }
 
-    public Integer getMin() {
+    public T getMin() {
         return min;
     }
 
-    public void setMin( Integer min) {
+    public void setMin( T min) {
         this.min = min;
     }
 

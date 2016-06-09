@@ -1,14 +1,18 @@
 package com.bryanreinero.platypus.schema;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class FieldDescriptor implements Visitable {
-	
-	private final String name;
 
+	@JsonProperty
+	private final String name;
 	private Set <ValueDescriptor> values = new HashSet <ValueDescriptor> ();
-	
+
+	@JsonCreator
 	public FieldDescriptor ( String name ) {
 		this.name = name;
 	}

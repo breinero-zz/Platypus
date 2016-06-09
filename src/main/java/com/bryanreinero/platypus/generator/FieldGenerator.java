@@ -1,8 +1,7 @@
 package com.bryanreinero.platypus.generator;
 
-import com.bryanreinero.markov.Chain;
-import com.bryanreinero.markov.Event;
-
+import com.bryanreinero.markov.Node;
+import com.bryanreinero.markov.Edge;
 import com.bryanreinero.platypus.schema.FieldDescriptor;
 import com.bryanreinero.platypus.schema.ValueDescriptor;
 import org.bson.Document;
@@ -15,17 +14,17 @@ import java.util.Set;
  */
 public class FieldGenerator {
 
-    private final Chain<RandomInterval> values = new Chain<RandomInterval>();
+    private final Node<RandomInterval> values = new Node<RandomInterval>();
     private final String key;
 
     public FieldGenerator(FieldDescriptor descriptor ) {
 
         key = descriptor.getName();
 
-        Set<Event<RandomInterval>> events = new HashSet<Event<RandomInterval>>();
+        Set<Edge<RandomInterval>> events = new HashSet<Edge<RandomInterval>>();
         for( ValueDescriptor d : descriptor.getValues() )
             events.add(
-                    new Event<RandomInterval>(
+                    new Edge<RandomInterval>(
                             d.getProbability(),
                             RandIntervalGenerators.getRandomIntervalGenerator( d )
                     )

@@ -1,6 +1,7 @@
 package com.bryanreinero.platypus.schema;
 
-import com.bryanreinero.platypus.schema.FieldDescriptor;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,9 +11,11 @@ import java.util.Set;
  */
 public class DocumentDescriptor {
 
-    private final Set<FieldDescriptor> fields = new HashSet<FieldDescriptor>();
+    @JsonProperty
     private final String name;
+    private final Set<FieldDescriptor> fields = new HashSet<FieldDescriptor>();
 
+    @JsonCreator
     public DocumentDescriptor( String name ) {
         this.name = name;
     }
