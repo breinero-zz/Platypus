@@ -1,9 +1,9 @@
-#Platypus
-####Version 1.0.0
+# Platypus
+#### Version 1.0.0
 
 A JSON schema descriptor specifcation. This project includes a reference implementation in Java.
 
-##Descriptor Struture
+## Descriptor Struture
 A Platypus schema descriptor is a simple, flat array of field descriptors (defined below).
 
 ```
@@ -19,14 +19,14 @@ A Platypus schema descriptor is a simple, flat array of field descriptors (defin
 JSON schema description composed of two sub-descriptors: field descriptors and type descriptors 
 
 
-###Field Descriptor
+### Field Descriptor
 A JSON object describing the allowed values of a named field.
 
 * name - of type String, the name of the field 
 * values: of type Array, A set of Type Descriptors which define the allow values of this field.
 
 
-####Example
+#### Example
 ```
 { 
 	name: "user",
@@ -36,10 +36,10 @@ A JSON object describing the allowed values of a named field.
 }
 ```
 
-###Type Descriptor
+### Type Descriptor
 Describes a interval of allowed values. A polymorphic object, the interval definition specific to data type being described.
 
-####types
+#### Types
 * array
 * boolean
 * null
@@ -47,7 +47,7 @@ Describes a interval of allowed values. A polymorphic object, the interval defin
 * object
 * string
 
-#####Array Descriptor
+##### Array Descriptor
 ```
 {
 	type: "array", 
@@ -57,15 +57,15 @@ Describes a interval of allowed values. A polymorphic object, the interval defin
 	]
 }
 ```
-#####Boolean Descriptor
+##### Boolean Descriptor
 ```
 { type: "boolean" }
 ```
-#####Null Descriptor
+##### Null Descriptor
 ```
 { type: "null" }
 ```
-#####Number Descriptor
+##### Number Descriptor
 ```
 {
 	type: "number", 
@@ -74,7 +74,7 @@ Describes a interval of allowed values. A polymorphic object, the interval defin
 }
 ```
 
-#####Object Descriptor
+##### Object Descriptor
 ```
 {
 	type: "object", 
@@ -82,17 +82,17 @@ Describes a interval of allowed values. A polymorphic object, the interval defin
 }
 ```
 
-#####String Descriptor
+##### String Descriptor
 ```
 {
 	type: "object", 
 	regex: "^sample string"
 }
 ```
-###Describing Nested Structures
+### Describing Nested Structures
 Each field descriptor is a itself JSON document, but is a 'flat' structure which does not nest in a pattern similar to the document it describes. The Platypus schema descriptor models nested fields with javascript's 'dot' notation. For example consider how the following simple example document can be described with Platypus:
 
-####Example address document
+#### Example address document
 ```
 {	
 	address: {
@@ -102,7 +102,7 @@ Each field descriptor is a itself JSON document, but is a 'flat' structure which
 	}
 }
 ```
-####Field Descriptor for field 'address.street'
+#### Field Descriptor for field 'address.street'
 ```
 {
 	name: "adress.street",
@@ -117,7 +117,7 @@ Each field descriptor is a itself JSON document, but is a 'flat' structure which
 Using dot notation is particularly helpful in keeping the descriptors document structure simple and easily human readible. Consider how complex the descriptor nested structure would be when describing a nested array of sub-objects. 
 
 
-###Sample Schema Descriptor
+### Sample Schema Descriptor
 
 ```
 {
